@@ -1,0 +1,11 @@
+.config
+*.o
+*.pyc
+
+# gtags
+GTAGS
+GRTAGS
+GPATH
+
+# ESP-IDF default build directory name
+build
