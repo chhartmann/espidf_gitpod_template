@@ -61,12 +61,14 @@ RUN echo IDF_CHECKOUT_REF=$IDF_CHECKOUT_REF IDF_CLONE_BRANCH_OR_TAG=$IDF_CLONE_B
       sudo git submodule update --init --recursive; \
     fi
 
+RUN sudo chown -R ${USER} /opt/esp
+
 # Install all the required tools
 RUN : \
   && sudo update-ca-certificates --fresh \
-  && sudo $IDF_PATH/tools/idf_tools.py --non-interactive install required \
-  && sudo $IDF_PATH/tools/idf_tools.py --non-interactive install cmake \
-  && sudo $IDF_PATH/tools/idf_tools.py --non-interactive install-python-env \
+  && $IDF_PATH/tools/idf_tools.py --non-interactive install required \
+  && $IDF_PATH/tools/idf_tools.py --non-interactive install cmake \
+  && $IDF_PATH/tools/idf_tools.py --non-interactive install-python-env \
   && sudo rm -rf $IDF_TOOLS_PATH/dist \
   && :
 
