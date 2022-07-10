@@ -6,8 +6,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # We need libpython2.7 due to GDB tools
 RUN : \
-  && apt-get update \
-  && apt-get install -y \
+  && sudo apt-get update \
+  && sudo apt-get install -y \
     apt-utils \
     bison \
     ca-certificates \
@@ -30,9 +30,9 @@ RUN : \
     wget \
     xz-utils \
     zip \
-  && apt-get autoremove -y \
-  && rm -rf /var/lib/apt/lists/* \
-  && update-alternatives --install /usr/bin/python python /usr/bin/python3 10 \
+  && sudo apt-get autoremove -y \
+  && sudo rm -rf /var/lib/apt/lists/* \
+  && sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10 \
   && python -m pip install --upgrade \
     pip \
     virtualenv \
@@ -45,29 +45,29 @@ RUN : \
 #   IDF_CHECKOUT_REF=<some commit on release/vX.Y branch>.
 
 ARG IDF_CLONE_URL=https://github.com/espressif/esp-idf.git
-ARG IDF_CLONE_BRANCH_OR_TAG=release-v4.4
+ARG IDF_CLONE_BRANCH_OR_TAG=release/v4.4
 ARG IDF_CHECKOUT_REF=
 
 ENV IDF_PATH=/opt/esp/idf
 ENV IDF_TOOLS_PATH=/opt/esp
 
 RUN echo IDF_CHECKOUT_REF=$IDF_CHECKOUT_REF IDF_CLONE_BRANCH_OR_TAG=$IDF_CLONE_BRANCH_OR_TAG && \
-    git clone --recursive \
+    sudo git clone --recursive \
       ${IDF_CLONE_BRANCH_OR_TAG:+-b $IDF_CLONE_BRANCH_OR_TAG} \
       $IDF_CLONE_URL $IDF_PATH && \
     if [ -n "$IDF_CHECKOUT_REF" ]; then \
       cd $IDF_PATH && \
-      git checkout $IDF_CHECKOUT_REF && \
-      git submodule update --init --recursive; \
+      sudo git checkout $IDF_CHECKOUT_REF && \
+      sudo git submodule update --init --recursive; \
     fi
 
 # Install all the required tools
 RUN : \
-  && update-ca-certificates --fresh \
-  && $IDF_PATH/tools/idf_tools.py --non-interactive install required \
-  && $IDF_PATH/tools/idf_tools.py --non-interactive install cmake \
-  && $IDF_PATH/tools/idf_tools.py --non-interactive install-python-env \
-  && rm -rf $IDF_TOOLS_PATH/dist \
+  && sudo update-ca-certificates --fresh \
+  && sudo $IDF_PATH/tools/idf_tools.py --non-interactive install required \
+  && sudo $IDF_PATH/tools/idf_tools.py --non-interactive install cmake \
+  && sudo $IDF_PATH/tools/idf_tools.py --non-interactive install-python-env \
+  && sudo rm -rf $IDF_TOOLS_PATH/dist \
   && :
 
 # Ccache is installed, enable it by default
