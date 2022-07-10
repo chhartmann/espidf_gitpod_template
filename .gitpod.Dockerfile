@@ -74,7 +74,7 @@ RUN : \
 
 # Ccache is installed, enable it by default
 ENV IDF_CCACHE_ENABLE=1
-COPY entrypoint.sh /opt/esp/entrypoint.sh
+#COPY entrypoint.sh /opt/esp/entrypoint.sh
 
-ENTRYPOINT [ "/opt/esp/entrypoint.sh" ]
-CMD [ "/bin/bash" ]
+#ENTRYPOINT [ "/opt/esp/entrypoint.sh" ]
+#CMD [ "/bin/bash" ]
