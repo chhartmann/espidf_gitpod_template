@@ -1,3 +1,7 @@
+# Gitpod enabled sample project of ESP-IDF
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/chhartmann/espidf_gitpod_template)
+
 # _Sample project_
 
 (See the README.md file in the upper level 'examples' directory for more information about examples.)
